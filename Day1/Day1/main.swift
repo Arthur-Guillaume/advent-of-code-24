@@ -1,25 +1,5 @@
 import Foundation
-
-enum AdventOfCodeError: LocalizedError {
-    case noFileFound
-    case invalidData
-    case incorrectParameters
-
-    var errorDescription: String? {
-        switch self {
-        case .incorrectParameters:
-            "Parameters count is incorrect"
-        case .invalidData:
-            "Data format doesn't match the expected input"
-        case .noFileFound:
-            "Input file not found"
-        }
-    }
-}
-
-func readFileContent(path: String) throws -> String {
-    try String(contentsOfFile: path, encoding: .utf8)
-}
+import MyLibrary
 
 func parse(fileContent: String) throws -> ([Int], [Int]) {
     var lList = [Int]()
@@ -33,7 +13,7 @@ func parse(fileContent: String) throws -> ([Int], [Int]) {
             let lIntElement = Int(numbers[0]),
             let rIntElement = Int(numbers[1])
         else {
-            throw AdventOfCodeError.invalidData
+            throw MyLibrary.AdventOfCodeError.invalidData
         }
         lList.append(lIntElement)
         rList.append(rIntElement)
@@ -78,7 +58,7 @@ func main(){
         }
 
         let firstArgument = CommandLine.arguments[1]
-        let fileContent = try readFileContent(path: firstArgument)
+        let fileContent = try FileReader.readFileContent(path: firstArgument)
 
         let (leftList, rightList) = try parse(fileContent: fileContent)
 
