@@ -56,9 +56,11 @@ func main() {
         let fileContent = try FileReader.readFileContent(path: firstArgument)
 
         let matrix = try parse(input: fileContent)
-        let safeReportsCount = try matrix.map(isNearlySafe(report:)).count { $0 }
+        let safeReportsCount = try matrix.map(isSafe(report:)).count { $0 }
+        let nearlySafeReportsCount = try matrix.map(isNearlySafe(report:)).count { $0 }
 
         print("\(safeReportsCount) reports are safe")
+        print("\(nearlySafeReportsCount) reports are nearly safe")
     } catch {
         print("Fatal error: \(error.localizedDescription)")
     }

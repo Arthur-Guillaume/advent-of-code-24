@@ -65,12 +65,18 @@ func main() {
         let firstArgument = CommandLine.arguments[1]
         let fileContent = try FileReader.readFileContent(path: firstArgument)
 
-        let enabledPart = clean(input: fileContent)
-        let result = try extractValidOperations(rawInput: enabledPart)
+        let partOneResult = try extractValidOperations(rawInput: fileContent)
             .map { try extractNumbers(operation: $0) }
             .reduce(0) { $0 + $1.0 * $1.1 }
 
-        print("\(result)")
+        print("Part 1: \(partOneResult)")
+
+        let enabledPart = clean(input: fileContent)
+        let partTwoResult = try extractValidOperations(rawInput: enabledPart)
+            .map { try extractNumbers(operation: $0) }
+            .reduce(0) { $0 + $1.0 * $1.1 }
+
+        print("Part 2: \(partTwoResult)")
     } catch {
         print("Fatal error: \(error.localizedDescription)")
     }
